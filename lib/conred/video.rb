@@ -40,6 +40,9 @@ module Conred
       ).html_safe
     end
 
+    def thumbnail_url
+    end
+
     def exist?
       response = Net::HTTP.get_response(URI(api_uri))
       response.is_a?(Net::HTTPSuccess)
@@ -68,6 +71,10 @@ module Conred
 
       def video_link
         "//www.youtube.com/embed/#{@video_id}?wmode=transparent"
+      end
+
+      def thumbnail_url
+        "//img.youtube.com/vi/#{@video_id}/0.jpg"
       end
 
       private

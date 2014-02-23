@@ -1,6 +1,8 @@
 require "conred/version"
 require "action_view"
 require "net/http"
+require "json"
+require "open-uri"
 module Conred
   module Video
     def initialize(arguments = {:width => 670, :height => 450, :error_message => "Video url you have provided is invalid"})
@@ -102,6 +104,16 @@ module Conred
 
       def video_link
         "//player.vimeo.com/video/#{@video_id}"
+      end
+
+      def thumbnail_url
+        api_url = "http://vimeo.com/api/v2/video/%s.json" % @video_id
+
+        begin
+          JSON.parse(open(api_url).read).first['thumbnail_small']
+        rescue
+          ""
+        end
       end
 
       private
